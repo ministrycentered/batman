@@ -14,6 +14,8 @@ class Batman.PluralAssociation extends Batman.Association
 
     # Check whether the relation has already been set on this model
     if setInAttributes = self.getFromAttributes(@)
+      setInAttributes.set('loaded', true)
+      setInAttributes.fire('loaded')
       setInAttributes
     else
       relatedRecords = self.setForRecord(@)

@@ -18,6 +18,7 @@ QUnit.module "Batman.RailsStorage"
 
     class @Store extends Batman.Model
       @encode 'id', 'name'
+      @hasMany 'products'
     @storeAdapter = new Batman.RailsStorage(@Store)
     @Store.persist @storeAdapter
 
@@ -34,6 +35,20 @@ QUnit.module "Batman.RailsStorage"
 
 restStorageTestSuite.testOptionsGeneration('.json')
 restStorageTestSuite()
+
+asyncTest "AssociationSet fires loaded event and sets loaded accessor when set via attributes", 2, ->
+  MockRequest.expect
+    url: '/stores'
+    method: 'POST'
+  ,
+    store:
+      name: 'Test'
+      id: 1
+  store = new @Store(name: "Test")
+  deepEqual store.get('products').get('loaded'), false
+  store.save =>
+    deepEqual store.get('products').get('loaded'), true
+    QUnit.start()
 
 asyncTest 'creating in storage: should callback with the record with errors on it if server side validation fails', ->
   MockRequest.expect
