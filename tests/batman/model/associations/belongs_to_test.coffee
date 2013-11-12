@@ -59,12 +59,14 @@ asyncTest "belongsTo associations are loaded via ID", 1, ->
       equal store.get('id'), 1
       QUnit.start()
 
-asyncTest "belongsTo associations return a proxy before load and the record after", 1, ->
+asyncTest "belongsTo associations return a proxy before load and the record after", 3, ->
   @Product.find 1, (err, product) =>
     throw err if err
     product.get('store').load (err, store) =>
       throw err if err
       ok product.get('store') instanceof @Store
+      ok product.get('store.loaded')
+      ok product.get('store.target') instanceof @Store
       QUnit.start()
 
 asyncTest "belongsTo associations are not loaded when autoload is off", 1, ->

@@ -272,6 +272,8 @@ class Batman.Model extends Batman.Object
   @accessor 'errors', -> @errors ||= new Batman.ErrorsSet
   @accessor 'isNew', -> @isNew()
   @accessor 'isDirty', -> @isDirty()
+  @accessor 'target', -> @
+  @accessor 'loaded', -> true
 
   # Default accessor implementing the latching draft behaviour
   @accessor Model.defaultAccessor =
