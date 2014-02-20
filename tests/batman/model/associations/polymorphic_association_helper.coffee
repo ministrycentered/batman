@@ -47,7 +47,7 @@ ex.baseSetup = ->
 
   namespace.Store = class @Store extends Batman.Model
     @encode 'id', 'name'
-    @hasMany 'metafields', {as: 'subject', namespace}
+    @hasMany 'metafields', {saveInline: true, as: 'subject', namespace}
 
   @storeAdapter = createStorageAdapter @Store, AsyncTestStorageAdapter,
     'stores1':
@@ -66,7 +66,7 @@ ex.baseSetup = ->
 
   namespace.Product = class @Product extends Batman.Model
     @encode 'id', 'name'
-    @hasMany 'metafields', {as: 'subject', namespace}
+    @hasMany 'metafields', {saveInline: true, as: 'subject', namespace}
 
   @productAdapter = createStorageAdapter @Product, AsyncTestStorageAdapter,
     'products1':
